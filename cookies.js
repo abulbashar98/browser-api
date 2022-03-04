@@ -24,7 +24,7 @@ const getCookie = name => {
     const allCookie = document.cookie.split('; ');
     const nameCookie = allCookie.find(c => c.includes(name));
     const nameCookieValue = nameCookie.split('=')[1];
-    return nameCookieValue
+    return nameCookieValue;
 }
 
 const search = getCookie('country')
