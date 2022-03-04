@@ -1,9 +1,20 @@
 
-
+const displayProductsAvailabeInStorage = () => {
+    const cart = getCartInStorage();
+    // console.log(cart);
+    for (const key in cart) {
+        // console.log(key);
+        displayProduct(key);
+    }
+}
+// displayProductsAvailabeInStorage();
 
 const addToCart = () => {
     // get cart item 
     const product = getCartItem();
+    if (!product) {
+        return;
+    }
 
 
     // add to local storage 
@@ -19,8 +30,14 @@ const addToCart = () => {
 const getCartItem = () => {
     const productInputField = document.getElementById('product-input');
     const productName = productInputField.value;
-    document.getElementById('product-input').value = '';
-    return productName;
+    if (!productName && productName === undefined) {
+        return;
+    }
+    else {
+        productInputField.value = '';
+        return productName;
+    }
+
 }
 
 
@@ -40,10 +57,17 @@ const getCartInStorage = () => {
     }
 }
 
+
 const addProductToCart = name => {
     const cart = getCartInStorage();
 
-    cart[name] = 1;
+    if (cart[name]) {
+        cart[name] = cart[name] + 1;
+    }
+    else {
+        cart[name] = 1;
+    }
+
     // console.log(cart) 
     cartStringified = JSON.stringify(cart);
 
@@ -57,4 +81,12 @@ const displayProduct = name => {
     const li = document.createElement('li');
     li.innerText = name;
     ul.appendChild(li);
+}
+
+displayProductsAvailabeInStorage();
+
+
+const placeOrder = () => {
+    document.getElementById('products').textContent = '';
+    localStorage.removeItem('cart');
 }
